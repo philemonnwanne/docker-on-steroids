@@ -1,4 +1,4 @@
-> I was able to get systemd to work in a ubuntu:20.04 Docker container on a MacOS host by adding the following options to my dockerfile.
+> I was able to get systemd to work in a ubuntu:20.04 Docker container on a MacOS (m1) host by adding the following options to my dockerfile.
 Hope this helps.
 
 ### This image is meant for development use only. I strongly recommend against running it in production!
