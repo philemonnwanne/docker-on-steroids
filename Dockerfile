@@ -19,7 +19,6 @@ RUN apt-get update && \
 
 # Install system dependencies and once all installation is completed, remove all packages cache to reduce the size of the custom image.
 RUN apt-get -y install \
-    --no-install-recommends \
     tzdata \
     openssh-server \
     sudo \
