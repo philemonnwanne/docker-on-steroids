@@ -1,5 +1,5 @@
 # Download base/parent image ubuntu:20.04 from which we build
-FROM ubuntu:focal-fossa
+FROM ubuntu:focal
 
 # Identify the maintainer of this image
 LABEL maintainer="Philemon Nwanne <philemonnwanne@gmail.com>"
