@@ -4,7 +4,7 @@ FROM ubuntu:focal
 # Identify the maintainer of this image
 LABEL maintainer="Philemon Nwanne <philemonnwanne@gmail.com>"
 LABEL version="1.0"
-LABEL description="This is custom Docker Image meant for use with Vagrant."
+LABEL description="This is a custom Docker Image meant for use with Vagrant."
 
 # Set the environment variable.
 ENV container=docker
@@ -24,6 +24,7 @@ RUN apt-get -y install \
     sudo \
     man-db \
     curl \
+    nano \
     wget \
     vim-tiny && \
     apt-get -qq clean && \
