@@ -1,4 +1,5 @@
-> How I was able to get systemd to work in a ubuntu:20.04 Docker container on a MacOS (M1) host.
+![aleksander-vlad-72XGyzo2keM-unsplash](https://user-images.githubusercontent.com/108567784/186233663-65eca80a-e256-4a80-a134-b1a2b10cb7ab.jpg)
+
 ## This image is meant for development use only. I strongly recommend against running it in production!
 
 ## Supported tags
