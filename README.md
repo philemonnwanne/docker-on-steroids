@@ -278,9 +278,6 @@ How to contribute?
  2. Create a new branch with your changes
  3. Submit a pull request
 
-## License
-
-MIT - see the accompanying [LICENSE](https://github.com/tknerr/vagrant-docker-baseimages/blob/master/LICENSE) file
 
 ## <samp>Credits and References:</samp>
 
@@ -296,3 +293,8 @@ MIT - see the accompanying [LICENSE](https://github.com/tknerr/vagrant-docker-ba
 - https://stackoverflow.com/questions/34677042/vagrant-and-docker-provider
 - https://medium.com/theleanprogrammer/shipping-docker-learn-to-build-docker-image-for-ubuntu-20-04-fe9b082fd3f4
 - https://docs.docker.com/engine/reference/builder/#buildkit
+
+
+## License
+
+Copyright © 2022 [philemonnwanne](http://github.com/philemonnwanne). Licensed under [the # license](https://github.com/philemonnwanne/docker-systemd_solution/blob/master/LICENSE).
