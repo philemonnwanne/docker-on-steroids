@@ -3,18 +3,17 @@
 ## This image is meant for development use only. I strongly recommend against running it in production!
 
 ## Supported tags
-- `ubuntu` `focal-fossa` 
-- `docker` `M1` `linux` 
-- `vagrant` `2.30`
+- `ubuntu` `focal-fossa` `docker` `m1` `linux` `vagrant`
 
 While I don't have the best idea on how to write an article as I have never written one until now, I'm just going to put this out here and who knows maybe someone could pick a thing or two from it. So here goes:
 
-So moving on to my main reason for putting this up here, I had recently started my DevOps program and I'm fortunate to have a new M1 MacBook. And it happened that we were given this particular task to `to run Linux vm's (Ubuntu) on our laptops, using vagrant and virtual box`, "Wow, this should be easy I thought". But a few hours later I'm still sitting in front of my machine and not one vm running...`Note` this wasn't my first time using a virtual machine, as I had used VMware, virtual box, hyper-v and kvm sometime during the course of my job. 
+So moving on to my main reason for putting this up here, I had recently started my DevOps program and I'm fortunate to have a new M1 MacBook. And it happened that we were given this particular task to `to run Linux vm's (Ubuntu) on our laptops, using vagrant and virtual box`, "Wow, this should be easy I thought". But a few hours later I'm still sitting in front of my machine and not one vm running.
+
+> `Note` this wasn't my first time using a virtual machine, as I had used VMware, virtual box, hyper-v and kvm sometime during the course of my job. 
 
 There were other alternatives like parallels, Multipass, UTM and fusion or maybe dual-booting my MAC to run some nice Linux flavour like (Asahi Linux, which I'm on currently and it does run at near native speed on M1). Sure, I could have used any of these, but for compliance purposes, and just to be on the same page as the instructor and my fellow students I needed vagrant and docker to work together and free of course😂. I had installed vagrant and Docker earlier and everything worked fine, but when I get to provisioning the vm I hit a dead end. And as some of us know virtualbox doesn't support M1 macs.
 
 This led me to scalping the internet looking for a solution, but there wasn't much help on the issue or some were rather too complicated or couldn't do what I needed them to so I decided to build my own solution. I can't put all the details here as that would be too long a read, but if you're just interested in knowing how I got them both to work seamlessly, or you own an M1 and have a project that requires you to use docker and vagrant, or perhaps you want to (make docker behave like a virtual machine) even though it wasn't really designed to, you can read on.
-
 
 So you just learned about docker and it's coola nd you're excited to start creating your first container. You import a base image in your dockerfile and create your app then run and Cool, it seems to work. Pretty easy, right?
 
@@ -60,7 +59,6 @@ How to contribute?
  2. Create a new branch with your changes
  3. Submit a pull request
 
-
 ## <samp>Credits and References:</samp>
 
 - https://dev.to/mattdark/using-docker-as-provider-for-vagrant-10me
@@ -76,7 +74,6 @@ How to contribute?
 - https://medium.com/theleanprogrammer/shipping-docker-learn-to-build-docker-image-for-ubuntu-20-04-fe9b082fd3f4
 - https://docs.docker.com/engine/reference/builder/#buildkit
 
-
 ## License
 
-Copyright © 2022 [philemonnwanne](http://github.com/philemonnwanne). Licensed under [the # license](https://github.com/philemonnwanne/docker-systemd_solution/blob/master/LICENSE).
+Copyright © 2022 [philemonnwanne](http://github.com/philemonnwanne). Licensed under [the MIT license](https://github.com/philemonnwanne/docker_systemd-solution/blob/main/LICENSE).
