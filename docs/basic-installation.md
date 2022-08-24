@@ -9,6 +9,16 @@
 - [Vagrantfile](Vagrantfile)
 - Some [patience]()😮‍💨
 
+## Visual representation of workflow
+> All Steps needed to carry out this project include:
+
+```mermaid
+graph TD;
+    INSTALL:Docker&Vagrant-->CREATE:WorkFolder;
+    CREATE:WorkFolder-->CREATE:Container;
+    CREATE:Container-->Access:VM;
+```
+
 ## Step 1: Installing Docker + Vagrant
 
 - After installing Docker and Vagrant you need to confirm your installations by running `docker --version` which should give you an output similar to:
@@ -34,18 +44,8 @@ Vagrant 2.3.0
 
 ## Step 3: Initializing the Vagrant configuration file
 - Naviagate into the directory created in step 2 by running `cd directory-name` 
-- While in that directory run `vagrant init` which creates a Vagrantfile
-- You should also get a message in your terminal saying:
-```
-A `Vagrantfile` has been placed in this directory. You are now
-ready to `vagrant up` your first virtual environment! Please read
-the comments in the Vagrantfile as well as documentation on
-[vagrantup.com](vagrantup.com) for more information on using Vagrant.
-```
-This confirms that you now have a `Vagrantfile` present in your current working directory and are ready to proceed to the next step.
-
-- Proceed to clear all the contents of your Vagrantfile
-- Then copy the contents of my [vagrantfile](Vagrantfile) into yours, it should look just like the image below👇🏾
+- While in that directory run `touch Vagrantfile` which creates a Vagrantfile
+- Copy the contents of my [vagrantfile](Vagrantfile) into yours, it should look just like the image below👇🏾
 
 ![vagrant-config-image](https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/vagrant-config.png)
 
