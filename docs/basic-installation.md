@@ -6,7 +6,7 @@
 - Docker installed: you can download the M1 version here [Docker](https://desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=module)
 - Vagrant installed: you can also get it here [Vagrant](https://releases.hashicorp.com/vagrant/2.3.0/vagrant_2.3.0_darwin_amd64.dmg) or run `brew install vagrant` on your terminal
 - [Dockerfile](Dockerfile)
-- [Vagrantfile](Vagrantfile)
+- [Vagrantfile](https://github.com/philemonnwanne/docker-on-steroids/blob/main/Vagrantfile)
 - Some [patience]()😮‍💨
 
 ## Visual representation of workflow
@@ -45,7 +45,7 @@ Vagrant 2.3.0
 ## Step 3: Initializing the Vagrant configuration file
 - Naviagate into the directory created in step 2 by running `cd directory-name` 
 - While in that directory run `touch Vagrantfile` which creates a Vagrantfile
-- Copy the contents of my [vagrantfile](Vagrantfile) into yours, it should look just like the image below👇🏾
+- Copy the contents of my [Vagrantfile](https://github.com/philemonnwanne/docker-on-steroids/blob/main/Vagrantfile) into yours, it should look just like the image below👇🏾
 
 ![vagrant-config-image](https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/vagrant-config.png)
 
