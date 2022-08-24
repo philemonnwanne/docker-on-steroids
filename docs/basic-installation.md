@@ -33,12 +33,8 @@ Vagrant 2.3.0
 - Create the directory where you want to initialize the vagrant configuration file
 
 ## Step 3: Initializing the Vagrant configuration file
-
-  <samp>Vagrant is quite easy to configure if you go through the docs</samp>
-
 - Naviagate into the directory created in step 2 by running `cd directory-name` 
-- while in that directory run `vagrant init` which creates a Vagrantfile:
-
+- While in that directory run `vagrant init` which creates a Vagrantfile
 - You should also get a message in your terminal saying:
 ```
 A `Vagrantfile` has been placed in this directory. You are now
@@ -77,7 +73,7 @@ This final command  `vagrant ssh` allows you access to the newly created virtual
 ## Conclusion
 
 `Disclaimer:` While I have learned a lot about linux, docker and vagrant just trying to make this work, I know I still have a lot to learn. I'm just someone who's trying to make things work, plus there's not much help out there for this issue. So if I've written anything horribly wrong or extremely misguided here please feel free to leave a comment. Also if this has helped you in any way, or if you've encountered this issue before and was able to solve it, I would love to hear how you went about it.
-Also I'll be creating a multiplatform image to support multiple architecture deployments in the furure so be on the look out.
+Also I'll be creating a multi architecture image to support multi platform deployments in the furure so be on the look out.
 
 ## Contribute
 
@@ -89,4 +85,4 @@ Want to contribute?
 
 ## License
 
-Copyright © 2022 [philemonnwanne](http://github.com/philemonnwanne). Licensed under [the # license](https://github.com/philemonnwanne/docker-systemd_solution/blob/master/LICENSE).
+Copyright © 2022 [philemonnwanne](http://github.com/philemonnwanne). Licensed under [the MIT license](https://github.com/philemonnwanne/docker-systemd_solution/blob/master/LICENSE).
