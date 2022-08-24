@@ -16,7 +16,7 @@
 graph TD;
     INSTALL:Docker&Vagrant-->CREATE:WorkFolder;
     CREATE:WorkFolder-->CREATE:Container;
-    CREATE:Container-->Access:VM;
+    CREATE:Container-->ACCESS:VM;
 ```
 
 ## Step 1: Installing Docker + Vagrant
