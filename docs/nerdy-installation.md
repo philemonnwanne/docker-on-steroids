@@ -36,8 +36,8 @@ Using a Dockerfile
 
 First you have to create a directory to store the configuration files for your environment and change to this directory.
 ```
-$ mkdir docker-test
-$ cd docker-test
+$ mkdir docker-vagrant
+$ cd docker-vagrant
 ```
 Create a Dockerfile:
 ```
@@ -270,9 +270,9 @@ If you are confused on how to go about the setup, take a look at the [vagrant do
 - Create the directory where you want to initialize the vagrant configuration file
 
 ## Initializing the Vagrant configuration file
-- Naviagate into the directory created in step 2 by running `cd directory-name` 
+- Naviagate into the directory you created in the previous step by running `cd directory-name` 
 - While in that directory run `touch Vagrantfile` which creates a Vagrantfile
-- Copy the contents of my [vagrantfile](Vagrantfile) into yours, it should look just like the image below👇🏾
+- Copy the contents of my [Vagrantfile](Vagrantfile) into yours, it should look just like the image below👇🏾
 
 ![vagrant-config-image](https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/vagrant-config.png)
 
