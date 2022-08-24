@@ -16,8 +16,8 @@ I had recently started my DevOps program at [AltSchool](altschoolafrica.com) and
 - Some Patience😮‍💨
 
 ## Links to get you started
-> - [Basic Installation](https://github.com/philemonnwanne/docker_systemd-solution/blob/main/docs/basic-installation.md)
-> - [Nerdy installation](https://github.com/philemonnwanne/docker_systemd-solution/blob/main/docs/nerdy-installation.md) (still under development)
+> - [Basic Installation](https://github.com/philemonnwanne/docker-on-steroids/blob/main/docs/basic-installation.md)
+> - [Nerdy installation](https://github.com/philemonnwanne/docker-on-steroids/blob/main/docs/nerdy-installation.md) (still under development)
 
 ## Conclusion
 
@@ -49,4 +49,4 @@ How to contribute?
 
 ## License
 
-Copyright © 2022 [philemonnwanne](http://github.com/philemonnwanne). Licensed under [the MIT license](https://github.com/philemonnwanne/docker_systemd-solution/blob/main/LICENSE).
+Copyright © 2022 [philemonnwanne](http://github.com/philemonnwanne). Licensed under [the MIT license](https://github.com/philemonnwanne/docker-on-steroids/blob/main/LICENSE).
