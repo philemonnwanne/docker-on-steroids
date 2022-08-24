@@ -17,7 +17,7 @@ I had recently started my DevOps program at [AltSchool](altschoolafrica.com) and
 
 ## Links to get you started
 > - [Basic Installation](https://github.com/philemonnwanne/docker-on-steroids/blob/main/docs/basic-installation.md)
-> - [Nerdy installation](https://github.com/philemonnwanne/docker-on-steroids/blob/main/docs/nerdy-installation.md) (still under development)
+> - [Nerdman Installation](https://github.com/philemonnwanne/docker-on-steroids/blob/main/docs/nerdy-installation.md) (still under development)
 
 ## Conclusion
 
