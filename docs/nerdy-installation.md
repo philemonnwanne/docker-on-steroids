@@ -135,6 +135,108 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ````
 Replacing the value of `TZ` according to your timezone.
 
+# Change TimeZone in Docker containers
+<samp>Below are multiple ways in which you can change the timezone of your dockers containers</samp>
+
+## With Docker Engine
+The timezone of a container can be set using an environment variable in the docker container when it is created. For example:
+```
+$ docker run ubuntu:latest date
+Sat Feb 27 15:58:32 UTC 2021
+$ docker run -e TZ=America/Bogota ubuntu:latest date
+Sat Feb 27 15:58:40 Asia 2021
+```
+
+## With Dockerfile
+We can also control container timezone using the Dockerfile. For this, we first need to install tzdata package and then specify timezone setting using the environmental variable:
+```
+FROM ubuntu:16.04
+ 
+# tzdata for timzone
+RUN apt-get update -y
+RUN apt-get install -y tzdata
+ 
+# timezone env with default
+ENV TZ=America/Bogota
+```
+Lets build docker image and run it:
+```
+# build docker image
+$ docker build -t ubuntu_modified_tz:20210221 .
+
+# run docker container
+$ docker run ubuntu_modified_tz:20210221 date
+Sat Feb 27 16:58:17 America 2021
+```
+
+## With Docker Compose
+We can control timezone in the container, by setting TZ environment variable as part of docker-compose:
+```
+version: "3.9"
+services:
+  ubuntu:
+    image: ubuntu:latest
+    container_name: ubuntu_container
+    environment:
+        - TZ=America/Bogota
+```
+
+## With Storage Data Volumes
+The directory /usr/share/zoneinfo in Docker contains the container time zones available.  The desired time zone from this folder can be copied to /etc/localtime file, to set as default time.
+
+This time zone files of the host machine can be set in Docker volume and shared among the containers by configuring it in the Dockerfile as below:
+```
+volumes: 
+- "/etc/timezone:/etc/timezone:ro" 
+- "/etc/localtime:/etc/localtime:ro"
+```
+
+The containers created out of this Dockerfile will have the same timezone as the host OS (as set in /etc/localtime file).
+
+This method can also be used to set timezone when using docker compose. However as we have noted above, this might not work for all cases.
+
+## With Kubernetes Pods
+Again, we have to rely here on setting up of the TZ variable:
+```
+spec:
+      containers:
+      - name: demo
+        image: docker.io/ubuntu:latest
+        imagePullPolicy: Always
+        env:
+        - name: TZ
+          value: America/Bogota
+```
+If we are using deployments, we can mention environment variable as part of container spec:
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+        app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: demo
+        image: docker.io/ubuntu:latest
+        imagePullPolicy: Always
+        env:
+        - name: TZ
+          value: America/Bogota
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 0
+```
+> If the methods listed above do not work for you, you may also choose to use host volumes to map /etc/localtime file with the pods/deployments.
+
+
 Vagrant requires an SSH connection to access the container and Docker images come only with the root user. You have to configure another user with `root` permissions. That's why the `ssh` and `sudo` packages are required.
 
 In the following lines the `vagrant` user is created and a password assigned. The user wouldn't be required to use a password when running any command that requires `root` permissions. The user is also added to the `sudo` group.
@@ -157,20 +259,17 @@ RUN chown -R vagrant:vagrant /home/vagrant/.ssh
 ```
 You can log in with the `root` user but the password wasn't assigned. You can change the password adding a similar line but changing `vagrant:vagrant` to `root:THEPASSWORDYOUCHOOSE` or after log in.
 
-> Want a guide on how to buid your own dockerfile here's a simple example to get you strated: [Stackify](https://stackify.com/)
+> Want to buid your own dockerfile, here's a simple guide to get you started: [Stackify](https://stackify.com/)
 
-``
-
-## Step 2: Creating your Development Environment
+# Creating your Development Environment
 ## Vagrant
 Vagrant is quite easy to configure if you go through the docs
 
 If you are confused on how to go about the setup, take a look at the [vagrant docker provider ](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjnpYu6r975AhVTnVwKHTKfBFwQFnoECBAQAQ&url=https%3A%2F%2Fwww.vagrantup.com%2Fdocs%2Fproviders%2Fdocker&usg=AOvVaw2OqVQ-HB6hvL96Coi7OP8e) and [vagrant docker provisioning](https://www.vagrantup.com/docs/provisioning/docker) documentation.
 
-
 - Create the directory where you want to initialize the vagrant configuration file
 
-## Step 3: Initializing the Vagrant configuration file
+## Initializing the Vagrant configuration file
 - Naviagate into the directory created in step 2 by running `cd directory-name` 
 - While in that directory run `touch Vagrantfile` which creates a Vagrantfile
 - Copy the contents of my [vagrantfile](Vagrantfile) into yours, it should look just like the image below👇🏾
@@ -179,7 +278,7 @@ If you are confused on how to go about the setup, take a look at the [vagrant do
 
 Here you tell Vagrant to build the Docker image from the `dockerhub` and the container can be accessed through SSH and must be always running.
 
-## Step 4: Creating your container
+## Creating your container
 
 > `Note:` Docker desktop needs to be running before you run the `vagrant up` command.
 
@@ -189,7 +288,7 @@ Run the `vagrant up --provider=docker` command which should give you an output s
 
 Wait for the process to complete successfully as it can take a while depending on network. Once you see `Machine booted and ready!` the process is complete and you can now login to your linux virtual machine via SSH.
 
-## Step 5: Accessing your Linux virtual machine
+## Accessing your Linux virtual machine
 
 This final command  `vagrant ssh` allows you access to the newly created virtual machine, and you can confirm this by checking the left part of terminal where you will notice that the curent logged in user is now @```vagrant.```
 
@@ -199,6 +298,19 @@ This final command  `vagrant ssh` allows you access to the newly created virtual
 > Run the following set of commands to install `net-tools` package and clear the error
 - `sudo apt-get update`
 - `sudo apt-get install -y net-tools` 
+
+<details><summary>Trouble installing nano🦠</summary>
+<p>
+
+#### Run the following code!
+
+```bash
+   sudo apt-get update
+   sudo apt-get install nano
+```
+
+</p>
+</details>
 
 ## Conclusion
 
