@@ -1,24 +1,12 @@
-# Building a Linux VM with Vagrant and Docker on Mac M1
+# Building a Linux VM with Vagrant and Docker on Mac M1💻
 ![aleksander-vlad-72XGyzo2keM-unsplash](https://user-images.githubusercontent.com/108567784/186233663-65eca80a-e256-4a80-a134-b1a2b10cb7ab.jpg)
 
-## This image is meant for development use only. I strongly recommend against running it in production!
+## This image is meant for development use only. I strongly recommend against running it in production!⚙️
 
 ## Supported tags
 - `ubuntu` `focal-fossa` `docker` `m1` `linux` `vagrant`
 
-While I don't have the best idea on how to write an article as I have never written one until now, I'm just going to put this out here and who knows maybe someone could pick a thing or two from it. So here goes:
-
-So moving on to my main reason for putting this up here, I had recently started my DevOps program and I'm fortunate to have a new M1 MacBook. And it happened that we were given this particular task to `to run Linux vm's (Ubuntu) on our laptops, using vagrant and virtual box`, "Wow, this should be easy I thought". But a few hours later I'm still sitting in front of my machine and not one vm running.
-
-> `Note` this wasn't my first time using a virtual machine, as I had used VMware, virtual box, hyper-v and kvm sometime during the course of my job. 
-
-There were other alternatives like parallels, Multipass, UTM and fusion or maybe dual-booting my MAC to run some nice Linux flavour like (Asahi Linux, which I'm on currently and it does run at near native speed on M1). Sure, I could have used any of these, but for compliance purposes, and just to be on the same page as the instructor and my fellow students I needed vagrant and docker to work together and free of course😂. I had installed vagrant and Docker earlier and everything worked fine, but when I get to provisioning the vm I hit a dead end. And as some of us know virtualbox doesn't support M1 macs.
-
-This led me to scalping the internet looking for a solution, but there wasn't much help on the issue or some were rather too complicated or couldn't do what I needed them to so I decided to build my own solution. I can't put all the details here as that would be too long a read, but if you're just interested in knowing how I got them both to work seamlessly, or you own an M1 and have a project that requires you to use docker and vagrant, or perhaps you want to (make docker behave like a virtual machine) even though it wasn't really designed to, you can read on.
-
-## Links to get you started
-> - [Basic Installation](https://github.com/philemonnwanne/docker_systemd-solution/blob/main/docs/basic-installation.md)
-> - [Nerdy installation](https://github.com/philemonnwanne/docker_systemd-solution/blob/main/docs/nerdy-installation.md) (still under development)
+I had recently started my DevOps program at [AltSchool](altschoolafrica.com) and I'm fortunate to have a new M1 MacBook. It happened that we were given a task to `to run Linux vm's (Ubuntu) on our laptops, using vagrant and virtual box`, "Wow, this should be easy I thought". But a few hours later I'm still sitting in front of my machine and not one vm running. For compliance purposes, I needed vagrant and docker to work together and free of course😂. I had installed vagrant and Docker earlier and everything worked fine, but when I got to provisioning the vm I hit a dead end. And as some of us know virtualbox doesn't support M1 macs. This led to me scalping the internet looking for a solution, but there wasn't much help on the issue or some were rather too complicated or couldn't do what I needed them to so I decided to build my own solution. 
 
 ## Requirements
 - Docker installed: you can download the M1 version here [Docker for M1](https://desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=module)
@@ -27,7 +15,9 @@ This led me to scalping the internet looking for a solution, but there wasn't mu
 - [Vagrantfile](Vagrantfile)
 - Some Patience😮‍💨
 
-> If you want a guide on how to buid your own dockerfile here's a simple example to get you strated: [Stackify](https://stackify.com/)
+## Links to get you started
+> - [Basic Installation](https://github.com/philemonnwanne/docker_systemd-solution/blob/main/docs/basic-installation.md)
+> - [Nerdy installation](https://github.com/philemonnwanne/docker_systemd-solution/blob/main/docs/nerdy-installation.md) (still under development)
 
 ## Conclusion
 
