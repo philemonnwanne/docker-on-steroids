@@ -1,3 +1,4 @@
+# Building a Linux VM with Vagrant and Docker on Mac M1
 ![aleksander-vlad-72XGyzo2keM-unsplash](https://user-images.githubusercontent.com/108567784/186233663-65eca80a-e256-4a80-a134-b1a2b10cb7ab.jpg)
 
 ## This image is meant for development use only. I strongly recommend against running it in production!
@@ -15,27 +16,9 @@ There were other alternatives like parallels, Multipass, UTM and fusion or maybe
 
 This led me to scalping the internet looking for a solution, but there wasn't much help on the issue or some were rather too complicated or couldn't do what I needed them to so I decided to build my own solution. I can't put all the details here as that would be too long a read, but if you're just interested in knowing how I got them both to work seamlessly, or you own an M1 and have a project that requires you to use docker and vagrant, or perhaps you want to (make docker behave like a virtual machine) even though it wasn't really designed to, you can read on.
 
-So you just learned about docker and it's coola nd you're excited to start creating your first container. You import a base image in your dockerfile and create your app then run and Cool, it seems to work. Pretty easy, right?
-
-<samp>Not so fast</samp>🌚
-
-You just built a container which contains a minimal operating system, and which only runs your app. But the operating system inside the container is not configured correctly. A proper Unix system should run all kinds of important system services. You're not running them, you're only running your app.
-
-> _But then you ask "What do you mean? I'm just using Ubuntu in Docker. Doesn't the OS inside the container take care of everything automatically?"_
-
-Not quite. You have Ubuntu installed in Docker. The files are there. But that doesn't mean Ubuntu's running as it should.
-When your Docker container starts, only the CMD command is run. 
-
-The only processes that will be running inside the container is the CMD command, and all processes that it spawns. That's why all kinds of important system services are not run automatically – you have to run them yourself.
-
-Furthermore, Ubuntu is not designed to be run inside Docker. Its init system, Upstart, assumes that it's running on either real hardware or virtualized hardware, but not inside a Docker container, which is a locked down environment with e.g. no direct access to many kernel resources. Normally, that's okay: inside a container you don't want to run Upstart anyway. You don't want a full system, you want a minimal system. But configuring that minimal system for use within a container has many strange corner cases that are hard to get right if you are not intimately familiar with the Unix system model. This can cause a lot of strange problems.
-
-If you want to know how to build the dockerfile you can check out the readme here [dockerfile](create-dockerfile.md)
-
-Even though vagraant docs stats that it supports dockr as one of it's providers, they are not exactly friends or should I say configuring them to work together isn't quite friendly:
-
-to get docker up and running, youll need a dockerfile, this contains all the instructions that docker needs to build your conatiner. And for your docker conatiner to work together with vagrant you'll need to configure it to behave as a traditional linux machine, which means you ll need at least sshd (which lets you ssh into the machine) and systemd even though it's advised against containers as it makes them mutable thereby less secure.
-
+## Links to get you started
+> - [Basic Installation](https://github.com/philemonnwanne/docker_systemd-solution/blob/main/docs/basic-installation.md)
+> - [Nerdy installation](https://github.com/philemonnwanne/docker_systemd-solution/blob/main/docs/nerdy-installation.md) (still under development)
 
 ## Requirements
 - Docker installed: you can download the M1 version here [Docker for M1](https://desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=module)
