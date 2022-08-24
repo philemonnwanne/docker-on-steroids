@@ -124,6 +124,13 @@ CMD ["/usr/sbin/init"]
 
 - <samp>All of this sets up a Docker container which doesn't work like a regular Docker container. It runs more like a virtual machine. This means it will be difficult to manage using the normal Docker commands. Once you take it down it will also be difficult to get up again. Best to control it with Vagrant.</samp><br><br>
 
+## Docker Base Images
+
+Just in case you want to work with the actual docker base images directly, the following ones are available on [docker hub](https://registry.hub.docker.com):
+
+ * [`philemonnwanne/ubuntu-mod:20.04`](https://hub.docker.com/r/philemonnwanne/ubuntu-mod/tags/)
+ * [`philemonnwanne/ubuntu-mod:latest`](https://hub.docker.com/r/philemonnwanne/ubuntu-mod/tags/)
+
 The official Docker image of Ubuntu 20.04 will be used as specified in FROM ubuntu:focal.
 
 When running `apt-get update -y` or `apt update -y`, it will ask you to configure the timezone, the prompt will wait for you to enter the selected option.
@@ -315,7 +322,7 @@ This final command  `vagrant ssh` allows you access to the newly created virtual
 ## Conclusion
 
 `Disclaimer:` While I have learned a lot about linux, docker and vagrant just trying to make this work, I know I still have a lot to learn. I'm just someone who's trying to make things work, plus there's not much help out there for this issue. So if I've written anything horribly wrong or extremely misguided here please feel free to leave a comment. Also if this has helped you in any way, or if you've encountered this issue before and was able to solve it, I would love to hear how you went about it.
-Also I'll be creating a multi architecture image to support multi platform deployments in the furure so be on the look out.
+Also I'll be creating an image to support multi platform deployments in the future so be on the look out.
 
 ## Contribute
 
