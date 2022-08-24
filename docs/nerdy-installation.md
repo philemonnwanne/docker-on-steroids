@@ -1,33 +1,50 @@
 
+<p align="center">
+  <img width="320" height="280" src="https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/docker.jpg">
+  <img width="320" height="280" src="https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/hasicorp.png">
+</p>
+
+
+> If you are here that means you don't like doing things the easy way🌚 so brace yourself🧘🏾‍♂️
+
 ## Requirements
-- Docker installed: you can download the M1 version here [Docker for M1](https://desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=module)
-- Vagrant installed: you can also get it here [Vagrant for M1](https://releases.hashicorp.com/vagrant/2.3.0/vagrant_2.3.0_darwin_amd64.dmg) or run `brew install vagrant` on your terminal
+- Docker installed: you can download the M1 version here [Docker](https://desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=module)
+- Vagrant installed: you can also get it here [Vagrant](https://releases.hashicorp.com/vagrant/2.3.0/vagrant_2.3.0_darwin_amd64.dmg) or run `brew install vagrant` on your terminal
+- [Dockerfile](Dockerfile)
+- [Vagrantfile](Vagrantfile)
+- Some [patience]()😮‍💨
 
+## Docker
 
-## Installing Docker and Vagrant
-
-- After installing Docker and Vagrant you need to confirm your installations by running `docker --version` which should give you an output similar to:
-
+There are two ways you can use Docker as provider. Using an image from the Docker registry:
 ```
-Last login: Fri Aug 19 11:24:34 on ttys000
-[14:55:35] philemonnwanneⓐPhilemonsMac ~ %  docker --version
-Docker version 20.10.17, build 100c701
-[14:55:41] philemonnwanneⓐPhilemonsMac ~ %
+Vagrant.configure("2") do |config|
+  config.vm.provider "docker" do |d|
+    d.image = ""
+  end
+end
+```
+Or a Dockerfile:
+```
+Vagrant.configure("2") do |config|
+  config.vm.provider "docker" do |d|
+    d.build_dir = "."
+  end
+end
+```
+Using a Dockerfile
+
+First you have to create a directory to store the configuration files for your environment and change to this directory.
+```
+$ mkdir docker-test
+$ cd docker-test
+```
+Create a Dockerfile:
+```
+$ touch Dockerfile
 ```
 
-`vagrant --version` should also give an ouput similar to:
-
-```
-[14:55:41] philemonnwanneⓐPhilemonsMac ~ %  vagrant --version
-Vagrant 2.3.0
-[14:57:23] philemonnwanneⓐPhilemonsMac ~ % 
-```
-
-> If you want a guide on how to buid your own dockerfile here's a simple example to get you strated: [Stackify](https://stackify.com/)
-
-
-# Docker
- Here's the Dockerfile that I used
+Add the content of the following Dockerfile that I created:
 
 ```
 # Download base/parent image ubuntu:20.04 from which we build our custome image
@@ -105,136 +122,92 @@ CMD ["/usr/sbin/init"]
 
 ```
 
-- <samp>All of this sets up a Docker container which doesn't work like a regular Docker container. It runs more like a virtual machine. This means it will be difficult to manage using the normal Docker commands. Once you take it down it will also be difficult to get up again. Best to control it with Vagrant. I've had to delete the container and re-create it with Vagrant many times.</samp><br><br>
+- <samp>All of this sets up a Docker container which doesn't work like a regular Docker container. It runs more like a virtual machine. This means it will be difficult to manage using the normal Docker commands. Once you take it down it will also be difficult to get up again. Best to control it with Vagrant.</samp><br><br>
 
+The official Docker image of Ubuntu 20.04 will be used as specified in FROM ubuntu:focal.
 
-# Vagrant
-Vagrant is quite easy to configure if you go through the docs
+When running `apt-get update -y` or `apt update -y`, it will ask you to configure the timezone, the prompt will wait for you to enter the selected option.
 
-Here's my vagrant file:
+To avoid this, you have to add the configuration options in the `Dockerfile`, by adding the following lines:
 ```
+ENV TZ=Africa/Lagos
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+````
+Replacing the value of `TZ` according to your timezone.
 
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+Vagrant requires an SSH connection to access the container and Docker images come only with the root user. You have to configure another user with `root` permissions. That's why the `ssh` and `sudo` packages are required.
 
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
-Vagrant.configure("2") do |config|
-  # The most common configuration options are documented and commented below.
-  # For a complete reference, please see the online documentation at
-  # https://docs.vagrantup.com.
-
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://vagrantcloud.com/search.
-  #config.vm.box = "generic/centos7"
-  config.vm.hostname = "ubuntu"
-
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
-  config.vm.network "private_network", type: "dhcp"
-
-  # Provider-specific configuration so you can fine-tune various backing providers for Vagrant. These expose provider-specific options.
-  
-  # Custom configuration for docker
-  config.vm.provider :docker do |docker, override|
-    override.vm.box = nil
-
-    # this is where your Dockerfile lives
-    docker.image = "philemonnwanne/vagrant-provider:20.04"
-    docker.remains_running = true
-
-    # Make sure it sets up ssh with the Dockerfile
-    # Vagrant is pretty dependent on ssh
-    docker.has_ssh = true
-
-    # Configure Docker to allow access to more resources
-    docker.privileged = true
-    docker.volumes = ["/sys/fs/cgroup:/sys/fs/cgroup:rw"]
-    docker.create_args = ["--cgroupns=host"]
-    # Uncomment to force arm64 for testing images on Intel
-    # docker.create_args = ["--platform=linux/arm64"]     
-  end
-  
-  # View the documentation for the provider you are using for more
-  # information on available options.
-
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", path: "script.sh"
-end
+In the following lines the `vagrant` user is created and a password assigned. The user wouldn't be required to use a password when running any command that requires `root` permissions. The user is also added to the `sudo` group.
+```
+RUN useradd --create-home -s /bin/bash vagrant
+RUN echo -n 'vagrant:vagrant' | chpasswd
+RUN echo 'vagrant ALL = NOPASSWD: ALL' > /etc/sudoers.d/vagrant
+```
+.ssh directory must be created. This is the directory when configuration files related with SSH connection are stored.
+```
+RUN mkdir -p /home/vagrant/.ssh
+RUN chmod 700 /home/vagrant/.ssh
+```
+An insecure key is added for the initial configuration. This key will be replaced later when you initialize your virtual environment the first time. Also, the ownership of the `.ssh` directory is changed to `vagrant` user.
 
 ```
+RUN echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ==" > /home/vagrant/.ssh/authorized_keys
+RUN chmod 600 /home/vagrant/.ssh/authorized_keys
+RUN chown -R vagrant:vagrant /home/vagrant/.ssh
+```
+You can log in with the `root` user but the password wasn't assigned. You can change the password adding a similar line but changing `vagrant:vagrant` to `root:THEPASSWORDYOUCHOOSE` or after log in.
 
-If you are confused on how to go about the setup, take a look at the [vagrant docker provider ](vagrant.com) and [vagrant docker provisioning](vagrant.com.com) documentation.
+> Want a guide on how to buid your own dockerfile here's a simple example to get you strated: [Stackify](https://stackify.com/)
 
+``
 
 ## Step 2: Creating your Development Environment
+## Vagrant
+Vagrant is quite easy to configure if you go through the docs
+
+If you are confused on how to go about the setup, take a look at the [vagrant docker provider ](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjnpYu6r975AhVTnVwKHTKfBFwQFnoECBAQAQ&url=https%3A%2F%2Fwww.vagrantup.com%2Fdocs%2Fproviders%2Fdocker&usg=AOvVaw2OqVQ-HB6hvL96Coi7OP8e) and [vagrant docker provisioning](https://www.vagrantup.com/docs/provisioning/docker) documentation.
+
 
 - Create the directory where you want to initialize the vagrant configuration file
 
-
 ## Step 3: Initializing the Vagrant configuration file
+- Naviagate into the directory created in step 2 by running `cd directory-name` 
+- While in that directory run `touch Vagrantfile` which creates a Vagrantfile
+- Copy the contents of my [vagrantfile](Vagrantfile) into yours, it should look just like the image below👇🏾
 
-- `cd into that directory` which you made in step 3 above and run `vagrant init philemonnwanne/baseimage-ubuntu-20.04 --minimal` to create the Vagrantfile below:
+![vagrant-config-image](https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/vagrant-config.png)
 
-```ruby
-Vagrant.configure(2) do |config|
-  config.vm.box = "philemonnwanne/baseimage-ubuntu-20.04"
-end
-```
-
-
-- You should also get a message in your terminal saying:
-```
-A `Vagrantfile` has been placed in this directory. You are now
-ready to `vagrant up` your first virtual environment! Please read
-the comments in the Vagrantfile as well as documentation on
-[vagrantup.com](vagrantup.com) for more information on using Vagrant.
-```
-- This confirms that you now have a `Vagrantfile` present in your current working directory and are ready to proceed to the next step.
-
-
-`Note:` Docker desktop needs to be running before you run the `vagrant up` command.
-
+Here you tell Vagrant to build the Docker image from the `dockerhub` and the container can be accessed through SSH and must be always running.
 
 ## Step 4: Creating your container
 
+> `Note:` Docker desktop needs to be running before you run the `vagrant up` command.
+
 Run the `vagrant up --provider=docker` command which should give you an output similar to the one below👇🏾:
 
-```
-
-I'll embedd an image here
-
-```
+![vagrant-up-image](https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/vagrant-up.png)
 
 Wait for the process to complete successfully as it can take a while depending on network. Once you see `Machine booted and ready!` the process is complete and you can now login to your linux virtual machine via SSH.
-
 
 ## Step 5: Accessing your Linux virtual machine
 
 This final command  `vagrant ssh` allows you access to the newly created virtual machine, and you can confirm this by checking the left part of terminal where you will notice that the curent logged in user is now @```vagrant.```
 
-
 ## NetTools
-> If you try runing `ifconfig` and you get the popular `-bash: ifconfig: command not found` error
-Just run the following commands to install net-tolls and fix the error
+> If you try runing `ifconfig` and you get the popular error: `-bash: ifconfig: command not found`
+> 
+> Run the following set of commands to install `net-tools` package and clear the error
 - `sudo apt-get update`
 - `sudo apt-get install -y net-tools` 
-
 
 ## Conclusion
 
 `Disclaimer:` While I have learned a lot about linux, docker and vagrant just trying to make this work, I know I still have a lot to learn. I'm just someone who's trying to make things work, plus there's not much help out there for this issue. So if I've written anything horribly wrong or extremely misguided here please feel free to leave a comment. Also if this has helped you in any way, or if you've encountered this issue before and was able to solve it, I would love to hear how you went about it.
-Also I'll be creating a multiplatform image to support multiple architecture in my free time so be on the look out.
+Also I'll be creating a multi architecture image to support multi platform deployments in the furure so be on the look out.
 
 ## Contribute
 
-How to contribute?
-
+Want to contribute?
  1. Fork this repo
  2. Create a new branch with your changes
  3. Submit a pull request
@@ -242,4 +215,4 @@ How to contribute?
 
 ## License
 
-Copyright © 2022 [philemonnwanne](http://github.com/philemonnwanne). Licensed under [the # license](https://github.com/philemonnwanne/docker-systemd_solution/blob/master/LICENSE).
+Copyright © 2022 [philemonnwanne](http://github.com/philemonnwanne). Licensed under [the MIT license](https://github.com/philemonnwanne/docker-on-steroids/blob/master/LICENSE).
