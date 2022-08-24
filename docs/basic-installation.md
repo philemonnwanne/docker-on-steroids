@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="660" height="320" src="https://github.com/philemonnwanne/docker_systemd-solution/blob/main/images/vagrantdockerdark.png">
+  <img width="660" height="320" src="https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/vagrantdockerdark.png">
 </p>
 
 ## Requirements
@@ -47,7 +47,7 @@ This confirms that you now have a `Vagrantfile` present in your current working 
 - Proceed to clear all the contents of your Vagrantfile
 - Then copy the contents of my [vagrantfile](Vagrantfile) into yours, it should look just like the image below👇🏾
 
-![vagrant-config-image](https://github.com/philemonnwanne/docker_systemd-solution/blob/main/images/vagrant-config.png)
+![vagrant-config-image](https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/vagrant-config.png)
 
 ## Step 4: Creating your container
 
@@ -55,7 +55,7 @@ This confirms that you now have a `Vagrantfile` present in your current working 
 
 Run the `vagrant up --provider=docker` command which should give you an output similar to the one below👇🏾:
 
-![vagrant-up-image](https://github.com/philemonnwanne/docker_systemd-solution/blob/main/images/vagrant-up.png)
+![vagrant-up-image](https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/vagrant-up.png)
 
 Wait for the process to complete successfully as it can take a while depending on network. Once you see `Machine booted and ready!` the process is complete and you can now login to your linux virtual machine via SSH.
 
@@ -85,4 +85,4 @@ Want to contribute?
 
 ## License
 
-Copyright © 2022 [philemonnwanne](http://github.com/philemonnwanne). Licensed under [the MIT license](https://github.com/philemonnwanne/docker-systemd_solution/blob/master/LICENSE).
+Copyright © 2022 [philemonnwanne](http://github.com/philemonnwanne). Licensed under [the MIT license](https://github.com/philemonnwanne/docker-on-steroids/blob/master/LICENSE).
