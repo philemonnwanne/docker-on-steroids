@@ -38,6 +38,7 @@ How to contribute?
 - https://dev.to/taybenlor/running-vagrant-on-an-m1-apple-silicon-using-docker-3fh4
 - https://www.howtoforge.com/tutorial/how-to-create-docker-images-with-dockerfile/
 - https://phusion.github.io/baseimage-docker/#intro
+- http://warman.io/
 - https://docs.docker.com/engine/reference/builder/#usage
 - https://developers.redhat.com/blog/2014/05/05/running-systemd-within-docker-container
 - https://kimh.github.io/blog/en/docker/gotchas-in-writing-dockerfile-en/#hack_to_run_container_in_the_background
