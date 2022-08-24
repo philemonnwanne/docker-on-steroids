@@ -142,43 +142,43 @@ Replacing the value of `TZ` according to your timezone.
 The timezone of a container can be set using an environment variable in the docker container when it is created. For example:
 ```
 $ docker run ubuntu:latest date
-Sat Feb 27 15:58:32 UTC 2021
-$ docker run -e TZ=America/Bogota ubuntu:latest date
-Sat Feb 27 15:58:40 Asia 2021
+Sat Aug 23 13:00:00 UTC 2021
+$ docker run -e TZ=Africa/Lagos ubuntu:latest date
+Sat Aug 23 13:00:00 Asia 2021
 ```
 
 ## With Dockerfile
 We can also control container timezone using the Dockerfile. For this, we first need to install tzdata package and then specify timezone setting using the environmental variable:
 ```
-FROM ubuntu:16.04
+FROM ubuntu:20.04
  
 # tzdata for timzone
 RUN apt-get update -y
 RUN apt-get install -y tzdata
  
 # timezone env with default
-ENV TZ=America/Bogota
+ENV TZ=Africa/Lagos
 ```
 Lets build docker image and run it:
 ```
 # build docker image
-$ docker build -t ubuntu_modified_tz:20210221 .
+$ docker build -t ubuntu-mod:20.04 .
 
 # run docker container
-$ docker run ubuntu_modified_tz:20210221 date
-Sat Feb 27 16:58:17 America 2021
+$ docker run ubuntu-mod:20.04 date
+
 ```
 
 ## With Docker Compose
 We can control timezone in the container, by setting TZ environment variable as part of docker-compose:
 ```
-version: "3.9"
+version: ""
 services:
   ubuntu:
-    image: ubuntu:latest
-    container_name: ubuntu_container
+    image: ubuntu:20.04
+    container_name: ubuntu-container
     environment:
-        - TZ=America/Bogota
+        - TZ=Africa/Lagos
 ```
 
 ## With Storage Data Volumes
@@ -201,11 +201,11 @@ Again, we have to rely here on setting up of the TZ variable:
 spec:
       containers:
       - name: demo
-        image: docker.io/ubuntu:latest
+        image: docker.io/ubuntu:20.04
         imagePullPolicy: Always
         env:
         - name: TZ
-          value: America/Bogota
+          value: Africa/Lagos
 ```
 If we are using deployments, we can mention environment variable as part of container spec:
 ```
@@ -225,11 +225,11 @@ spec:
     spec:
       containers:
       - name: demo
-        image: docker.io/ubuntu:latest
+        image: docker.io/ubuntu:20.04
         imagePullPolicy: Always
         env:
         - name: TZ
-          value: America/Bogota
+          value: Africa/Lagos
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       terminationGracePeriodSeconds: 0
