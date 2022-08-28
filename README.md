@@ -50,4 +50,4 @@ How to contribute?
 
 ## License
 
-Copyright © 2022 [philemonnwanne](http://github.com/philemonnwanne). Licensed under [the MIT license](https://github.com/philemonnwanne/docker-on-steroids/blob/main/LICENSE).
+Copyright © 2022 [philemonnwanne](http://github.com/philemonnwanne). Licensed under the [MIT](https://github.com/philemonnwanne/docker-on-steroids/blob/main/LICENSE) license.
