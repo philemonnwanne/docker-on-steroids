@@ -47,7 +47,7 @@ Vagrant 2.3.0
 - While in that directory run `touch Vagrantfile` which creates a Vagrantfile
 - Copy the contents of my [Vagrantfile](https://github.com/philemonnwanne/docker-on-steroids/blob/main/Vagrantfile) into yours, it should look just like the image below👇🏾
 
-![vagrant-config-image](https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/vagrant-config.png)
+![vagrant-config-image](https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/vagrant-cfig.png)
 
 ## Step 4: Creating your container
 
