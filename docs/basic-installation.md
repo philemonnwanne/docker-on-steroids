@@ -44,8 +44,8 @@ Vagrant 2.3.0
 
 ## Step 3: Initializing the Vagrant configuration file
 - Naviagate into the directory created in step 2 by running `cd directory-name` 
-- While in that directory run `touch Vagrantfile` which creates a Vagrantfile
-- Copy the contents of my [Vagrantfile](https://github.com/philemonnwanne/docker-on-steroids/blob/main/Vagrantfile) into yours, it should look just like the image below👇🏾
+- While in that directory run `touch vagrantfile` which creates a Vagrantfile
+- Copy the contents of my [vagrantfile](https://github.com/philemonnwanne/docker-on-steroids/blob/main/Vagrantfile) into your own `vagrantfile` it should look just like the image below👇🏾
 
 ![vagrant-config-image](https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/vagrant-cfig.png)
 
