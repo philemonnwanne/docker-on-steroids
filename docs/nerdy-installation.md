@@ -16,37 +16,45 @@
 
 ## Docker
 
-There are two ways you can use Docker as provider. Using an image from the Docker registry:
-```
+There are two ways you can use Docker as provider:
+
+###### 1. Using an image from the Docker registry
+
+```ruby
 Vagrant.configure("2") do |config|
   config.vm.provider "docker" do |d|
     d.image = ""
   end
 end
 ```
-Or a Dockerfile:
-```
+###### 2. Using a Dockerfile:
+
+```ruby
 Vagrant.configure("2") do |config|
   config.vm.provider "docker" do |d|
     d.build_dir = "."
   end
 end
 ```
-Using a Dockerfile
+
+## Using a Dockerfile
 
 First you have to create a directory to store the configuration files for your environment and change to this directory.
-```
+
+```php
 $ mkdir docker-vagrant
 $ cd docker-vagrant
 ```
-Create a Dockerfile:
-```
+
+###### Create a Dockerfile
+
+```php
 $ touch Dockerfile
 ```
 
 Add the content of the following Dockerfile that I created:
 
-```
+```php
 # Download base/parent image ubuntu:20.04 from which we build our custome image
 FROM ubuntu:focal
 
@@ -117,12 +125,12 @@ CMD ["/usr/sbin/init"]
 
 # FOR OPTIMIZATION-----------------------------------------------------------------
 ## (-) I minimized the number of RUN commands, as each RUN command adds a layer to the image, so consolidating the number of RUN can reduce the number of layers in the final image.
-### (-) I used --no-install-recommends when installing packages with apt-get install to disable installation of optional packages and save disk space.
+### (-) I used `--no-install-recommends` when installing packages with apt-get install to disable installation of optional packages and save disk space.
 #### (-) Cleaned package lists that are downloaded with apt-get update, by removing /var/lib/apt/lists/* in the same RUN step.
 
 ```
 
-- <samp>All of this sets up a Docker container which doesn't work like a regular Docker container. It runs more like a virtual machine. This means it will be difficult to manage using the normal Docker commands. Once you take it down it will also be difficult to get up again. Best to control it with Vagrant.</samp><br><br>
+All of this sets up a Docker container which doesn't work like a regular Docker container. It runs more like a virtual machine. This means it will be difficult to manage using the normal Docker commands. Once you take it down it will also be difficult to get up again. Best to control it with Vagrant.<br><br>
 
 ## Docker Base Images
 
@@ -131,23 +139,27 @@ Just in case you want to work with the actual docker base images directly, the f
  * [`philemonnwanne/ubuntu-mod:20.04`](https://hub.docker.com/r/philemonnwanne/ubuntu-mod/tags/)
  * [`philemonnwanne/ubuntu-mod:latest`](https://hub.docker.com/r/philemonnwanne/ubuntu-mod/tags/)
 
-The official Docker image of Ubuntu 20.04 will be used as specified in FROM ubuntu:focal.
+The official Docker image of Ubuntu 20.04 will be used as specified in `FROM ubuntu:focal`
 
 When running `apt-get update -y` or `apt update -y`, it will ask you to configure the timezone, the prompt will wait for you to enter the selected option.
 
 To avoid this, you have to add the configuration options in the `Dockerfile`, by adding the following lines:
-```
+
+```php
 ENV TZ=Africa/Lagos
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ````
-Replacing the value of `TZ` according to your timezone.
+> Note: Replace the value of `TZ` according to your timezone.
 
-# Change TimeZone in Docker containers
+## Change TimeZone in Docker containers
+
 <samp>Below are multiple ways in which you can change the timezone of your dockers containers</samp>
 
 ## With Docker Engine
+
 The timezone of a container can be set using an environment variable in the docker container when it is created. For example:
-```
+
+```php
 $ docker run ubuntu:latest date
 Sat Aug 23 13:00:00 UTC 2021
 $ docker run -e TZ=Africa/Lagos ubuntu:latest date
@@ -155,8 +167,10 @@ Sat Aug 23 13:00:00 Asia 2021
 ```
 
 ## With Dockerfile
+
 We can also control container timezone using the Dockerfile. For this, we first need to install tzdata package and then specify timezone setting using the environmental variable:
-```
+
+```php
 FROM ubuntu:20.04
  
 # tzdata for timzone
@@ -166,8 +180,10 @@ RUN apt-get install -y tzdata
 # timezone env with default
 ENV TZ=Africa/Lagos
 ```
+
 Lets build docker image and run it:
-```
+
+```php
 # build docker image
 $ docker build -t ubuntu-mod:20.04 .
 
@@ -177,8 +193,10 @@ $ docker run ubuntu-mod:20.04 date
 ```
 
 ## With Docker Compose
+
 We can control timezone in the container, by setting TZ environment variable as part of docker-compose:
-```
+
+```php
 version: ""
 services:
   ubuntu:
@@ -189,10 +207,12 @@ services:
 ```
 
 ## With Storage Data Volumes
+
 The directory /usr/share/zoneinfo in Docker contains the container time zones available.  The desired time zone from this folder can be copied to /etc/localtime file, to set as default time.
 
 This time zone files of the host machine can be set in Docker volume and shared among the containers by configuring it in the Dockerfile as below:
-```
+
+```php
 volumes: 
 - "/etc/timezone:/etc/timezone:ro" 
 - "/etc/localtime:/etc/localtime:ro"
@@ -203,8 +223,10 @@ The containers created out of this Dockerfile will have the same timezone as the
 This method can also be used to set timezone when using docker compose. However as we have noted above, this might not work for all cases.
 
 ## With Kubernetes Pods
+
 Again, we have to rely here on setting up of the TZ variable:
-```
+
+```php
 spec:
       containers:
       - name: demo
@@ -214,8 +236,10 @@ spec:
         - name: TZ
           value: Africa/Lagos
 ```
+
 If we are using deployments, we can mention environment variable as part of container spec:
-```
+
+```php
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -241,25 +265,29 @@ spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 0
 ```
-> If the methods listed above do not work for you, you may also choose to use host volumes to map /etc/localtime file with the pods/deployments.
+
+If the methods listed above do not work for you, you may also choose to use host volumes to map `/etc/localtime` file with the pods/deployments.
 
 
 Vagrant requires an SSH connection to access the container and Docker images come only with the root user. You have to configure another user with `root` permissions. That's why the `ssh` and `sudo` packages are required.
 
 In the following lines the `vagrant` user is created and a password assigned. The user wouldn't be required to use a password when running any command that requires `root` permissions. The user is also added to the `sudo` group.
-```
+
+```php
 RUN useradd --create-home -s /bin/bash vagrant
 RUN echo -n 'vagrant:vagrant' | chpasswd
 RUN echo 'vagrant ALL = NOPASSWD: ALL' > /etc/sudoers.d/vagrant
 ```
-.ssh directory must be created. This is the directory when configuration files related with SSH connection are stored.
-```
+`.ssh` directory must be created. This is the directory when configuration files related with SSH connection are stored.
+
+```php
 RUN mkdir -p /home/vagrant/.ssh
 RUN chmod 700 /home/vagrant/.ssh
 ```
+
 An insecure key is added for the initial configuration. This key will be replaced later when you initialize your virtual environment the first time. Also, the ownership of the `.ssh` directory is changed to `vagrant` user.
 
-```
+```php
 RUN echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ==" > /home/vagrant/.ssh/authorized_keys
 RUN chmod 600 /home/vagrant/.ssh/authorized_keys
 RUN chown -R vagrant:vagrant /home/vagrant/.ssh
@@ -267,6 +295,7 @@ RUN chown -R vagrant:vagrant /home/vagrant/.ssh
 You can log in with the `root` user but the password wasn't assigned. You can change the password adding a similar line but changing `vagrant:vagrant` to `root:THEPASSWORDYOUCHOOSE` or after log in.
 
 > Want to buid your own dockerfile, here's a simple guide to get you started: [Stackify](https://stackify.com/)
+
 
 # Creating your Development Environment
 ## Vagrant
@@ -300,9 +329,10 @@ Wait for the process to complete successfully as it can take a while depending o
 This final command  `vagrant ssh` allows you access to the newly created virtual machine, and you can confirm this by checking the left part of terminal where you will notice that the curent logged in user is now @```vagrant.```
 
 ## NetTools
+
 > If you try runing `ifconfig` and you get the popular error: `-bash: ifconfig: command not found`
-> 
-> Run the following set of commands to install `net-tools` package and clear the error
+
+Run the following set of commands to install `net-tools` package and clear the error
 - `sudo apt-get update`
 - `sudo apt-get install -y net-tools` 
 
@@ -311,7 +341,7 @@ This final command  `vagrant ssh` allows you access to the newly created virtual
 
 #### Run the following code!
 
-```bash
+```php
    sudo apt-get update
    sudo apt-get install nano
 ```
@@ -323,6 +353,7 @@ This final command  `vagrant ssh` allows you access to the newly created virtual
 
 `Disclaimer:` While I have learned a lot about linux, docker and vagrant just trying to make this work, I know I still have a lot to learn. I'm just someone who's trying to make things work, plus there's not much help out there for this issue. So if I've written anything horribly wrong or extremely misguided here please feel free to leave a comment. Also if this has helped you in any way, or if you've encountered this issue before and was able to solve it, I would love to hear how you went about it.
 Also I'll be creating an image to support multi platform deployments in the future so be on the look out.
+
 
 ## Contribute
 
