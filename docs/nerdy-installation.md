@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
   end
 end
 ```
-###### 2. Using a Dockerfile:
+###### 2. Using a Dockerfile
 
 ```ruby
 Vagrant.configure("2") do |config|
