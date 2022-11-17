@@ -23,7 +23,7 @@ graph TD;
 
 - After installing Docker and Vagrant you need to confirm your installations by running `docker --version` which should give you an output similar to:
 
-```
+```php
 Last login: Fri Aug 19 11:24:34 on ttys000
 [14:55:35] philemonnwanneⓐPhilemonsMac ~ %  docker --version
 Docker version 20.10.17, build 100c701
@@ -32,7 +32,7 @@ Docker version 20.10.17, build 100c701
 
 - Also running `vagrant --version` should give:
 
-```
+```php
 [14:55:41] philemonnwanneⓐPhilemonsMac ~ %  vagrant --version
 Vagrant 2.3.0
 [14:57:23] philemonnwanneⓐPhilemonsMac ~ % 
@@ -45,9 +45,33 @@ Vagrant 2.3.0
 ## Step 3: Initializing the Vagrant configuration file
 - Naviagate into the directory created in step 2 by running `cd directory-name` 
 - While in that directory run `touch vagrantfile` which creates a Vagrantfile
-- Copy the contents of my [vagrantfile](https://github.com/philemonnwanne/docker-on-steroids/blob/main/Vagrantfile) into your own `vagrantfile` it should look just like the image below👇🏾
+- Copy the contents of my [vagrantfile](https://github.com/philemonnwanne/docker-on-steroids/blob/main/Vagrantfile) into your own `vagrantfile` it should look just like the code block below👇🏾
 
-![vagrant-config-image](https://github.com/philemonnwanne/docker-on-steroids/blob/main/images/vagrant-cfig.png)
+```ruby
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  config.vm.hostname = "ubuntu"
+  # Create a private network
+  config.vm.network "private_network", type: "dhcp"
+  # Custom configuration for docker
+  config.vm.provider :docker do |docker|
+    # this is where your Dockerfile lives
+    docker.image = "philemonnwanne/ubuntu-mod:20.04"
+    # Make sure it sets up ssh with the Dockerfile
+    # Vagrant is pretty dependent on ssh
+    docker.has_ssh = true
+    # Configure Docker to allow access to more resources
+    docker.privileged = true
+    docker.volumes = ["/sys/fs/cgroup:/sys/fs/cgroup:rw"]
+    docker.create_args = ["--cgroupns=host"]
+  end
+  # View the documentation for the provider you are using for more
+  # information on available options.
+end
+```
 
 ## Step 4: Creating your container
 
