@@ -70,4 +70,4 @@ CMD ["/usr/sbin/init"]
 # FOR OPTIMIZATION-----------------------------------------------------------------
 ## (-) I minimized the number of RUN commands, as each RUN command adds a layer to the image, so consolidating the number of RUN can reduce the number of layers in the final image.
 ### (-) I Used --no-install-recommends when installing packages with apt-get install to disable installation of optional packages and save disk space.
-#### (-) Cleaned package lists that are downloaded with apt-get update, by removing /var/lib/apt/lists/* in the same RUN step.
+#### (-) Cleaned package lists that were downloaded with apt-get update, by removing /var/lib/apt/lists/* in the same RUN step.
