@@ -10,8 +10,8 @@
 ## Requirements
 - Docker installed: you can download the M1 version here [Docker](https://desktop.docker.com/mac/main/arm64/Docker.dmg?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=module)
 - Vagrant installed: you can also get it here [Vagrant](https://releases.hashicorp.com/vagrant/2.3.0/vagrant_2.3.0_darwin_amd64.dmg) or run `brew install vagrant` on your terminal
-- [Dockerfile](Dockerfile)
-- [Vagrantfile](Vagrantfile)
+- [Dockerfile](https://github.com/philemonnwanne/docker-on-steroids/blob/main/Dockerfile)
+- [Vagrantfile](https://github.com/philemonnwanne/docker-on-steroids/blob/main/Vagrantfile)
 - Some [patience]()😮‍💨
 
 ## Docker
@@ -308,7 +308,7 @@ If you are confused on how to go about the setup, take a look at the [vagrant do
 ## Initializing the Vagrant configuration file
 - Naviagate into the directory you created in the previous step by running `cd directory-name` 
 - While in that directory run `touch Vagrantfile` which creates a Vagrantfile
-- Copy the contents of my [Vagrantfile](Vagrantfile) into yours, it should look just like the code block below👇🏾
+- Copy the contents of my [Vagrantfile](https://github.com/philemonnwanne/docker-on-steroids/blob/main/Vagrantfile) into yours, it should look just like the code block below👇🏾
 
 ```ruby
 # -*- mode: ruby -*-
